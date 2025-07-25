@@ -54,23 +54,22 @@ test("intialized data account", () => {
 	expect(balanceAfter).toBe(svm.minimumBalanceForRentExemption(4n));
 
     //the first transaciton is done brother
-function dob(){
+    function dob(){
+        const ix2 = new TransactionInstruction({
+            keys:[
+                {pubkey: dataAccount.publicKey , isSigner: false , isWritable: true}
+            ],
+            programId: contractPubKey.publicKey,
+            data: Buffer.from("")
+        });
 
-    const ix2 = new TransactionInstruction({
-        keys:[
-            {pubkey: dataAccount.publicKey , isSigner: false , isWritable: true}
-        ],
-        programId: contractPubKey.publicKey,
-        data: Buffer.from("")
-    });
-
-    const tx2 = new Transaction();
-    tx2.recentBlockhash = svm.latestBlockhash();
-    tx2.feePayer = payer.publicKey;
-    tx2.add(ix2);
-    tx2.sign(payer);
-    svm.sendTransaction(tx2);
-    svm.expireBlockhash()
+        const tx2 = new Transaction();
+        tx2.recentBlockhash = svm.latestBlockhash();
+        tx2.feePayer = payer.publicKey;
+        tx2.add(ix2);
+        tx2.sign(payer);
+        svm.sendTransaction(tx2);
+        svm.expireBlockhash()
     }
 
     dob();
